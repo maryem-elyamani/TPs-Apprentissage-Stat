@@ -4,7 +4,7 @@
 """
 
 ############################################################################
-#                Import part
+#%%                Import part
 ############################################################################
 import numpy as np
 import matplotlib.pyplot as plt
@@ -134,7 +134,7 @@ def plot_2d(data, y=None, w=None, alpha_choice=1):
                  "g", alpha=alpha_choice)
 
 ############################################################################
-#            Displaying tools for the Frontiere
+#%%            Displaying tools for the Frontiere
 ############################################################################
 
 def frontiere(f, X, y, w=None, step=50, alpha_choice=1, colorbar=True,
@@ -183,3 +183,5 @@ def frontiere(f, X, y, w=None, step=50, alpha_choice=1, colorbar=True,
                  [min_tot0 * -w[1] / w[2] - w[0] / w[2],
                   max_tot0 * -w[1] / w[2] - w[0] / w[2]],
                  "k", alpha=alpha_choice)
+
+# %%

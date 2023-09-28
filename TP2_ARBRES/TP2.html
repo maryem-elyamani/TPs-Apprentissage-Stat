@@ -169,18 +169,18 @@ L'erreur avec le critère d'entropie est : 0.0</code></pre>
 <div class="cell" data-execution_count="4">
 <div class="cell-output cell-output-stdout">
 <pre><code>    Max Depth  Error (Entropy)  Error (Gini)
-0           1         0.736607      0.736607
-1           2         0.729911      0.720982
-2           3         0.718750      0.703125
-3           4         0.703125      0.665179
-4           5         0.691964      0.479911
-5           6         0.665179      0.395089
-6           7         0.491071      0.127232
-7           8         0.410714      0.071429
-8           9         0.171875      0.040179
-9          10         0.095982      0.017857
-10         11         0.060268      0.008929
-11         12         0.035714      0.002232</code></pre>
+0           1         0.727679      0.743304
+1           2         0.709821      0.720982
+2           3         0.691964      0.707589
+3           4         0.685268      0.689732
+4           5         0.671875      0.674107
+5           6         0.638393      0.656250
+6           7         0.462054      0.595982
+7           8         0.426339      0.470982
+8           9         0.091518      0.321429
+9          10         0.060268      0.205357
+10         11         0.040179      0.062500
+11         12         0.015625      0.044643</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <p><img src="TP2_files/figure-html/cell-5-output-2.png" width="1147" height="785"></p>
@@ -202,7 +202,7 @@ L'erreur avec le critère d'entropie est : 0.0</code></pre>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>plt.draw()</span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Best scores with entropy criterion: "</span>, dt_entropy.score(X_train, Y_train))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Best scores with entropy criterion:  0.9642857142857143</code></pre>
+<pre><code>Best scores with entropy criterion:  0.984375</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div id="frontiere" class="quarto-figure quarto-figure-center anchored">
@@ -252,7 +252,7 @@ L'erreur avec le critère d'entropie est : 0.0</code></pre>
 <span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Profondeur maximale'</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
 <span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Taux d'erreur"</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
 <span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Courbe d'erreur test"</span>, fontsize<span class="op">=</span><span class="dv">15</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="16">
+<div class="cell-output cell-output-display" data-execution_count="6">
 <pre><code>Text(0.5, 1.0, "Courbe d'erreur test")</code></pre>
 </div>
 <div class="cell-output cell-output-display">
@@ -260,6 +260,91 @@ L'erreur avec le critère d'entropie est : 0.0</code></pre>
 </div>
 </div>
 <p>Lors de cette analyse, nous avons remarqué une diminution du taux d’erreur lorsque la profondeur de l’arbre est initialement faible, suivie d’une stabilisation après avoir atteint un certain niveau de profondeur. Cette observation suggère que l’augmentation supplémentaire de la profondeur de l’arbre ne semble pas conduire à une amélioration significative du taux d’erreur.</p>
+</section>
+<section id="question-6" class="level3" data-number="1.5">
+<h3 data-number="1.5" class="anchored" data-anchor-id="question-6"><span class="header-section-number">1.5</span> Question 6 <a name="Question 6" href=""></a></h3>
+<p>Nous allons reprendre ce qui a été fait précédement avec le dataset DIGITS.</p>
+<div class="cell" data-execution_count="8">
+<div class="cell-output cell-output-display">
+<p><img src="TP2_files/figure-html/cell-9-output-1.png" width="1157" height="428"></p>
+</div>
+</div>
+<p>Lors de l’analyse, nous avons observé que l’erreur diminue progressivement jusqu’à atteindre zéro, ce qui confirme nos premières impressions. Maintenant, notre objectif principal est d’évaluer les performances sur les données de test. En utilisant une profondeur maximale initiale, nous constatons que l’erreur diminue puis atteint un plateau. Cette stabilisation se produit à une profondeur d’environ [indiquer la profondeur]. Ainsi, pour ce jeu de données, il n’est pas nécessaire d’opter pour une profondeur très élevée de l’arbre de décision pour obtenir de meilleures performances.</p>
+</section>
+<section id="question-7" class="level3" data-number="1.6">
+<h3 data-number="1.6" class="anchored" data-anchor-id="question-7"><span class="header-section-number">1.6</span> Question 7 <a name="Question 7" href=""></a></h3>
+<p>A l’aide de <code>sklearn.cross_validation</code>. Nous allons utiliser la fonction cross_val_score() pour évaluer les performances d’un modèle d’arbre de décision sur le jeu de données “digits”. L’objectif est d’ajuster la profondeur de l’arbre de manière variée afin de déterminer la profondeur optimale. Cette approche nous permettra de générer une série de scores pour différentes profondeurs et de choisir celle qui offre les meilleures performances.</p>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">12</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>error_ent <span class="op">=</span> []</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>error_gini <span class="op">=</span> []</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>dmax <span class="op">=</span> <span class="dv">12</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> digits.data</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> digits.target</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(dmax):</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    dt_entropy <span class="op">=</span> tree.DecisionTreeClassifier(criterion<span class="op">=</span><span class="st">'entropy'</span>,</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>                                             max_depth<span class="op">=</span>i <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    accuracy <span class="op">=</span> cross_val_score(dt_entropy, X, y, cv<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    error_ent.append(<span class="dv">1</span><span class="op">-</span>accuracy.mean())</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    dt_gini <span class="op">=</span> tree.DecisionTreeClassifier(criterion<span class="op">=</span><span class="st">'gini'</span>,</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>                                          max_depth<span class="op">=</span>i <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    accuracy2 <span class="op">=</span> cross_val_score(dt_gini, X, y, cv<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>    error_gini.append(<span class="dv">1</span><span class="op">-</span>accuracy2.mean())</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">7</span>, <span class="dv">4</span>))</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>plt.plot(error_ent, label<span class="op">=</span><span class="st">"entropy"</span>)</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>plt.plot(error_gini, label<span class="op">=</span><span class="st">"gini"</span>)</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Depth'</span>)</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Error"</span>)</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"L'erreur avec les critères Gini et Entropy"</span>)</span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(error_ent)</span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(error_gini)</span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>best_depth <span class="op">=</span> np.argmin(error_ent) <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(best_depth)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="TP2_files/figure-html/cell-10-output-1.png" width="661" height="428"></p>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[0.8035599006828057, 0.662250155183116, 0.5047268777157046, 0.3572284295468654, 0.26373680943513345, 0.2314711359404097, 0.19030726256983255, 0.17419615145872136, 0.181415270018622, 0.17974239602731212, 0.18865301055245176, 0.18307883302296712]
+[0.8024487895716946, 0.6888857852265673, 0.5408659217877095, 0.4551862197392924, 0.3650217256362509, 0.2654562383612662, 0.20924270639354448, 0.18586902545003103, 0.17084419615145874, 0.17031967721911856, 0.17917442582247056, 0.17585661080074488]
+8</code></pre>
+</div>
+</div>
+<p>La meilleure valeur pour la profondeur est <span class="math inline">\(8\)</span> pour cette graine là.</p>
+</section>
+<section id="question-8" class="level3" data-number="1.7">
+<h3 data-number="1.7" class="anchored" data-anchor-id="question-8"><span class="header-section-number">1.7</span> Question 8 <a name="Question 8" href=""></a></h3>
+<p>dans cette quetsion, nous allons générer des courbes d’apprentissage en modifiant la taille de l’ensemble d’entraînement. Ces courbes nous permettront d’obtenir des scores pour différentes tailles d’ensembles. De plus, nous allons incorporer les “intervalles de confiance” pour représenter la variation des scores obtenus lors de la validation croisée.</p>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>dt <span class="op">=</span> tree.DecisionTreeClassifier(criterion<span class="op">=</span><span class="st">'entropy'</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>n_samples, train_scores, test_scores <span class="op">=</span> learning_curve(dt, X_train, Y_train, cv<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>train_scores_mean <span class="op">=</span> np.mean(train_scores, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>train_scores_std <span class="op">=</span> np.std(train_scores, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>test_scores_mean <span class="op">=</span> np.mean(test_scores, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>test_scores_std <span class="op">=</span> np.std(test_scores, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Tracer la courbe d'apprentissage avec un style personnalisé</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>plt.grid()</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>plt.fill_between(n_samples, train_scores_mean <span class="op">-</span> <span class="fl">1.96</span> <span class="op">*</span> train_scores_std,</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>                 train_scores_mean <span class="op">+</span> <span class="fl">1.96</span> <span class="op">*</span> train_scores_std, alpha<span class="op">=</span><span class="fl">0.2</span>, color<span class="op">=</span><span class="st">'blue'</span>, label<span class="op">=</span><span class="st">"Train (±1.96 STD)"</span>)</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>plt.fill_between(n_samples, test_scores_mean <span class="op">-</span> <span class="fl">1.96</span> <span class="op">*</span> test_scores_std,</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>                 test_scores_mean <span class="op">+</span> <span class="fl">1.96</span> <span class="op">*</span> test_scores_std, alpha<span class="op">=</span><span class="fl">0.2</span>, color<span class="op">=</span><span class="st">'orange'</span>, label<span class="op">=</span><span class="st">"Test (±1.96 STD)"</span>)</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>plt.plot(n_samples, train_scores_mean, <span class="st">'o-'</span>, color<span class="op">=</span><span class="st">'blue'</span>, label<span class="op">=</span><span class="st">"Score d'entraînement"</span>)</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>plt.plot(n_samples, test_scores_mean, <span class="st">'o-'</span>, color<span class="op">=</span><span class="st">'orange'</span>, label<span class="op">=</span><span class="st">"Score de validation croisée"</span>)</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>plt.legend(loc<span class="op">=</span><span class="st">"lower right"</span>)</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Taille de l'échantillon d'entraînement"</span>)</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Accuracy"</span>)</span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Courbe d'apprentissage pour le meilleur arbre de décision"</span>)</span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="TP2_files/figure-html/cell-11-output-1.png" width="898" height="1020"></p>
+</div>
+</div>
 </section>
 </section>
 

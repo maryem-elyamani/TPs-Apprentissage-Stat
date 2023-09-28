@@ -1,7 +1,7 @@
 ---
 title: "TP-Arbres"
 format:
-  pdf:
+  html: 
     papersize: letter
     author: EL YAMANI MARYEM
     date: 2023/09/28
@@ -146,7 +146,6 @@ Le choix de la profondeur optimale est crucial pour l'équilibre entre adaptatio
 ```{python}
 #| label: frontiere
 #| fig-cap: "Frontières pour la meilleur profondeur (entropie)"
-
 dt_entropy.max_depth = np.argmin(1-scores_entropy)+1
 plt.figure()
 frontiere(lambda x: dt_entropy.predict(x.reshape((1, -1))),X_train, Y_train, step=100)
@@ -174,8 +173,7 @@ import graphviz
 
 Un arbre de décision est une structure conceptuelle relativement simple composée d'un nœud racine, suivi de deux nœuds enfants à chaque niveau. Chaque nœud non-terminal (qui n'est pas une feuille) possède également deux nœuds enfants, et cette structure se poursuit jusqu'à ce que nous atteignions les nœuds terminaux, également appelés feuilles, qui contiennent les décisions finales. Lorsque nous évaluons un point de données à travers l'arbre, si une condition au nœud k est vraie pour ce point, nous suivons la branche de gauche ; sinon, nous empruntons la branche de droite. Cette logique se répète jusqu'à ce que nous atteignions une feuille, qui détermine la décision ou la classe associée à ce point de données.
 
-<img src='./Plots/arbre.png' width=800>
-
+<img src='decisiontree.png' width=800>
 ### Question 5 <a name="Question 5"></a>
 
 Nous allons maintenant évaluer la précision de notre arbre en calculant son taux d'erreur sur un nouvel échantillon de 160 données générées à l'aide de la fonction `rand_checkers`.
@@ -221,3 +219,4 @@ plt.title("Courbe d'erreur test", fontsize=15)
 
 
 Lors de cette analyse, nous avons remarqué une diminution du taux d'erreur lorsque la profondeur de l'arbre est initialement faible, suivie d'une stabilisation après avoir atteint un certain niveau de profondeur. Cette observation suggère que l'augmentation supplémentaire de la profondeur de l'arbre ne semble pas conduire à une amélioration significative du taux d'erreur.
+

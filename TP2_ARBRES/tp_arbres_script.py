@@ -17,6 +17,7 @@ params = {'axes.labelsize': 6,
           'legend.fontsize': 12,
           'text.usetex': False,
           'figure.figsize': (10, 12)}
+
 plt.rcParams.update(params)
 
 sns.set_context("poster")
@@ -27,7 +28,7 @@ _ = sns.axes_style()
 ############################################################################
 # Data Generation: example
 ############################################################################
-
+#%%
 np.random.seed(1)
 
 n = 100
@@ -98,64 +99,72 @@ plot_2d(data4[:, :2], data4[:, 2], w=None)
 # ARBRES
 ############################################
 
-
+#%%
 # Q2. Créer deux objets 'arbre de décision' en spécifiant le critère de
 # classification comme l'indice de gini ou l'entropie, avec la
 # fonction 'DecisionTreeClassifier' du module 'tree'.
 
 dt_entropy = DecisionTreeClassifier(criterion='entropy')
 dt_gini = DecisionTreeClassifier(criterion='gini')
-
+#%%
 # Effectuer la classification d'un jeu de données simulées avec rand_checkers des échantillons de
 # taille n = 456 (attention à bien équilibrer les classes)
 
-data = rand_checkers(n1= 4,n2= 114,n3= 114,n4= 114, sigma)
+data = rand_checkers(n1= 4,n2= 114,n3= 114,n4= 114)
 n_samples = len(data)
-X = data[1, :2]
-Y = data[:, 2].astype(int)
-and careful with the type (cast to int)
+X = data[:,:2]
+Y = np.asarray(data[:,-1], dtype=int)
 
+#%%
 dt_gini.fit(X, Y)
 dt_entropy.fit(X, Y)
-
+#%%
 print("Gini criterion")
 print(dt_gini.get_params())
 print(dt_gini.score(X, Y))
-
+#%%
 print("Entropy criterion")
 print(dt_entropy.get_params())
 print(dt_entropy.score(X, Y))
 
 #%%
 # Afficher les scores en fonction du paramètre max_depth
-
-dmax = 12
+# Initialisation 
+#%%
+dmax = 12      # choix arbitraire   
 scores_entropy = np.zeros(dmax)
 scores_gini = np.zeros(dmax)
 
 plt.figure(figsize=(15, 10))
+
+# Boucle principale
 for i in range(dmax):
-    # dt_entropy = ... TODO
-    # ...
-    # scores_entropy[i] = dt_entropy.score(X, Y)
+    # Critère : entropie
+    dt_entropy = tree.DecisionTreeClassifier(criterion='entropy', 
+                                             max_depth=i+1)
+    dt_entropy.fit(X,Y)
+    scores_entropy[i] = dt_entropy.score(X, Y)
 
-    # dt_gini = ... TODO
-    # ...
-    # scores_gini[i] = TODO
+    # Critère : indice de Gini
+    dt_gini = tree.DecisionTreeClassifier(criterion='gini', 
+                                          max_depth=i+1)
+    dt_gini.fit(X,Y)
+    scores_gini[i] = dt_gini.score(X,Y)
 
+    # Affichage progressif des frontières en fonction de la profondeur de l'arbre
     plt.subplot(3, 4, i + 1)
     frontiere(lambda x: dt_gini.predict(x.reshape((1, -1))), X, Y, step=50, samples=False)
 plt.draw()
-
-
+#%%
 plt.figure()
-# plt.plot(...)  # TODO
+plt.plot(1-scores_entropy, label="entropy")
+plt.plot(1-scores_gini, label="gini")
+plt.legend()
 plt.xlabel('Max depth')
 plt.ylabel('Accuracy Score')
 plt.draw()
 print("Scores with entropy criterion: ", scores_entropy)
 print("Scores with Gini criterion: ", scores_gini)
-
 #%%
 # Q3 Afficher la classification obtenue en utilisant la profondeur qui minimise le pourcentage d’erreurs
 # obtenues avec l’entropie
